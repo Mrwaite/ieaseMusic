@@ -27,6 +27,7 @@ router.get('/:type?/:offset?', async(req, res) => {
                 order: 'hot',
             },
         });
+        ;
         let data = response.data;
 
         if (data.code !== 200) {

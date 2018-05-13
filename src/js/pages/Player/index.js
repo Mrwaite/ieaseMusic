@@ -135,30 +135,30 @@ class Player extends Component {
             );
         }
 
-        if (users.length) {
-            content.push(
-                <div
-                    className={classes.users}
-                    key="users">
-                    <h3>Listening history</h3>
-                    {
-                        users.map((e, index) => {
-                            return (
-                                <Link
-                                    className="clearfix tooltip"
-                                    data-text={e.name}
-                                    key={index}
-                                    to={e.link}>
-                                    <FadeImage
-                                        src={e.avatar}
-                                        title={e.name} />
-                                </Link>
-                            );
-                        })
-                    }
-                </div>
-            );
-        }
+        // if (users.length) {
+        //     content.push(
+        //         <div
+        //             className={classes.users}
+        //             key="users">
+        //             <h3>Listening history</h3>
+        //             {
+        //                 users.map((e, index) => {
+        //                     return (
+        //                         <Link
+        //                             className="clearfix tooltip"
+        //                             data-text={e.name}
+        //                             key={index}
+        //                             to={e.link}>
+        //                             <FadeImage
+        //                                 src={e.avatar}
+        //                                 title={e.name} />
+        //                         </Link>
+        //                     );
+        //                 })
+        //             }
+        //         </div>
+        //     );
+        // }
 
         content.push(
             <div

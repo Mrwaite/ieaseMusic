@@ -14,6 +14,7 @@ router.get('/', async(req, res) => {
 
     try {
         let response = await axios.get(`/personal_fm`);
+        ;
         let data = response.data;
 
         if (data.code !== 200) {

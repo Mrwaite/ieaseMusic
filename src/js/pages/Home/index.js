@@ -192,7 +192,7 @@ class Home extends Component {
                                     </pattern>
                                 </defs>
                                 <text class="${classes.welcome}" text-anchor="middle" x="50%" y="0" dy="100px">Welcome</text>
-                                <text class="${classes.description}" text-anchor="middle" x="50%" y="0" dy="130px">ieaseMusic is Made by 💖</text>
+                                <text class="${classes.description}" text-anchor="middle" x="50%" y="0" dy="130px">慢慢聆听</text>
                             </svg>
                         `}} />
 

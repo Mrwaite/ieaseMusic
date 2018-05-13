@@ -1,4 +1,3 @@
-
 // app 控制应用程序的事件生命周期
 // BrowserWindow 创建和控制浏览器窗口
 // Menu 创建原生应用菜单和上下文菜单
@@ -11,6 +10,8 @@
 import { app, BrowserWindow, Menu, Tray, globalShortcut, ipcMain, shell, powerMonitor, dialog } from 'electron';
 import windowStateKeeper from 'electron-window-state';
 import storage from 'electron-json-storage';
+
+// 使应用自动更新
 import { autoUpdater } from 'electron-updater';
 import axios from 'axios';
 import _debug from 'debug';
@@ -27,6 +28,8 @@ let menu;
 let tray;
 let mainWindow;
 let isOsx = process.platform === 'darwin';
+
+// 主菜单, 程窗体顶层
 let mainMenu = [
     {
         label: 'ieaseMusic',
@@ -65,7 +68,7 @@ let mainMenu = [
                 }
             },
             {
-                label: 'Quit',
+                label: '退出',
                 accelerator: 'Command+Q',
                 selector: 'terminate:',
                 click() {
@@ -80,7 +83,7 @@ let mainMenu = [
         label: 'Controls',
         submenu: [
             {
-                label: 'Pause',
+                label: '暂停',
                 accelerator: 'Space',
                 click() {
                     mainWindow.show();
@@ -88,7 +91,7 @@ let mainMenu = [
                 }
             },
             {
-                label: 'Next',
+                label: '下一首',
                 accelerator: 'Right',
                 click() {
                     mainWindow.show();
@@ -96,7 +99,7 @@ let mainMenu = [
                 }
             },
             {
-                label: 'Previous',
+                label: '上一首',
                 accelerator: 'Left',
                 click() {
                     mainWindow.show();
@@ -104,7 +107,7 @@ let mainMenu = [
                 }
             },
             {
-                label: 'Increase Volume',
+                label: '音量+',
                 accelerator: 'Up',
                 click() {
                     mainWindow.show();
@@ -112,7 +115,7 @@ let mainMenu = [
                 }
             },
             {
-                label: 'Decrease Volume',
+                label: '音量-',
                 accelerator: 'Down',
                 click() {
                     mainWindow.show();
@@ -120,7 +123,7 @@ let mainMenu = [
                 }
             },
             {
-                label: 'Like',
+                label: '喜欢',
                 accelerator: 'Cmd+L',
                 click() {
                     mainWindow.show();
@@ -130,7 +133,7 @@ let mainMenu = [
         ],
     },
     {
-        label: 'Recently Played',
+        label: '最近播放',
         submenu: [
             {
                 label: 'Nothing...',
@@ -250,34 +253,10 @@ let mainMenu = [
                 role: 'close'
             }
         ]
-    },
-    {
-        role: 'help',
-        submenu: [
-            {
-                label: 'Bug report 🐛',
-                click() {
-                    shell.openExternal('https://github.com/trazyn/ieaseMusic/issues');
-                }
-            },
-            {
-                label: 'Fork me on Github 🚀',
-                click() {
-                    shell.openExternal('https://github.com/trazyn/ieaseMusic');
-                }
-            },
-            {
-                type: 'separator'
-            },
-            {
-                label: '💕 Follow me on Twitter 👏',
-                click() {
-                    shell.openExternal('https://twitter.com/var_darling');
-                }
-            }
-        ]
     }
 ];
+
+// 托盘菜单, 像是window右下角
 let trayMenu = [
     {
         label: 'Pause',
@@ -328,12 +307,6 @@ let trayMenu = [
         }
     },
     {
-        label: 'Fork me on Github',
-        click() {
-            shell.openExternal('https://github.com/trazyn/ieaseMusic');
-        }
-    },
-    {
         type: 'separator'
     },
     {
@@ -348,7 +321,7 @@ let trayMenu = [
         type: 'separator'
     },
     {
-        label: 'Quit',
+        label: '退出',
         accelerator: 'Command+Q',
         selector: 'terminate:',
         click() {
@@ -358,6 +331,8 @@ let trayMenu = [
         }
     }
 ];
+
+// dock 菜单
 let dockMenu = [
     {
         label: 'Toggle Player',
@@ -409,6 +384,7 @@ function checkForUpdates() {
     autoUpdater.checkForUpdates();
 }
 
+// 顶层菜单
 function updateMenu(playing) {
     if (!isOsx) {
         return;
@@ -420,6 +396,7 @@ function updateMenu(playing) {
     Menu.setApplicationMenu(menu);
 }
 
+// 通知区域菜单
 function updateTray(playing) {
     // Update unread mesage count
     trayMenu[0].label = playing ? 'Pause' : 'Play';
@@ -460,17 +437,19 @@ function registerGlobalShortcut() {
     });
 }
 
+// 创建浏览器窗口
 const createMainWindow = () => {
     var mainWindowState = windowStateKeeper({
-        defaultWidth: 740,
-        defaultHeight: 480,
+        defaultWidth: 900,
+        defaultHeight: 600,
     });
 
+    // 创建
     mainWindow = new BrowserWindow({
         x: mainWindowState.x,
         y: mainWindowState.y,
-        width: 740,
-        height: 480,
+        width: mainWindowState.width,
+        height: mainWindowState.height,
         resizable: false,
         vibrancy: 'medium-light',
         backgroundColor: 'none',
@@ -480,6 +459,8 @@ const createMainWindow = () => {
 
     mainWindow.loadURL(`file://${__dirname}/src/index.html`);
 
+    // wenContents 渲染并控制BrowserWindow实例的内容。
+    // 当导航完成时触发,onload事件触发的时候
     mainWindow.webContents.on('did-finish-load', () => {
         try {
             mainWindow.show();
@@ -487,11 +468,13 @@ const createMainWindow = () => {
         } catch (ex) { }
     });
 
+    // 当页面被要求打开一个新url窗口的时候触发,像是 window.open, a.href.
     mainWindow.webContents.on('new-window', (event, url) => {
         event.preventDefault();
         shell.openExternal(url);
     });
 
+    //
     mainWindow.on('close', e => {
         if (forceQuit) {
             mainWindow = null;
@@ -511,6 +494,11 @@ const createMainWindow = () => {
                 accelerator: `Cmd+${index}`,
                 click() {
                     mainWindow.show();
+
+                    // 主进程发送一个异步的消息给渲染进程通过 channel
+                    // 渲染进程可以通过监听 ipcRenderer 上的管道 channel 获取消息
+                    // 消息名 player-play
+                    // 消息会转化为 JSON, 所以函数和原型链就会被销毁
                     mainWindow.webContents.send('player-play', {
                         id: e.id,
                     });
@@ -587,11 +575,14 @@ const createMainWindow = () => {
 
     // App has suspend
     powerMonitor.on('suspend', () => {
+
+        // 发送 player-pause 消息
         mainWindow.webContents.send('player-pause');
     });
 
     if (isOsx) {
         // App about
+        // 设置 "关于" 面板选项
         app.setAboutPanelOptions({
             applicationName: 'ieaseMusic',
             applicationVersion: pkg.version,
@@ -599,6 +590,7 @@ const createMainWindow = () => {
             credits: `With the invaluable help of: \n github.com/Binaryify/NeteaseCloudMusicApi`,
             version: pkg.version
         });
+        // 设置 mac 下方 dock的图标和菜单
         app.dock.setIcon(`${__dirname}/src/assets/dock.png`);
         app.dock.setMenu(Menu.buildFromTemplate(dockMenu));
     }
@@ -609,13 +601,19 @@ const createMainWindow = () => {
     debug('Create main process success 🍻');
 };
 
+// 设置当前应用程序的名字
 app.setName('ieaseMusic');
 
+// 当 electron 初始化的时候触发
 app.on('ready', createMainWindow);
+
+// 在应用程序开始关闭窗口之前触发
 app.on('before-quit', () => {
     // Fix issues #14
     forceQuit = true;
 });
+
+// 当应用程序被激活的时候发出
 app.on('activate', e => {
     if (!mainWindow.isVisible()) {
         mainWindow.show();

@@ -120,74 +120,15 @@ class App extends Component {
                     }
                 },
                 {
-                    label: 'Next',
+                    label: '下一首',
                     click: () => {
                         isFMPlaying() ? fm.next() : controller.next();
                     }
                 },
                 {
-                    label: 'Previous',
+                    label: '上一首',
                     click: () => {
                         controller.prev();
-                    }
-                },
-                {
-                    type: 'separator',
-                },
-                {
-                    label: 'Menu',
-                    click: () => {
-                        menu.toggle(true);
-                    }
-                },
-                {
-                    label: 'Next Up',
-                    click: () => {
-                        playing.toggle(true);
-                    }
-                },
-                {
-                    type: 'separator',
-                },
-                {
-                    label: 'Like 💖',
-                    enabled: logined,
-                    click: () => {
-                        if (me.likes.get(controller.song.id)) {
-                            return;
-                        }
-                        me.like(controller.song);
-                    }
-                },
-                {
-                    label: 'Ban 💩',
-                    enabled: logined,
-                    click: () => {
-                        fm.ban(controller.song.id);
-                    }
-                },
-                {
-                    type: 'separator',
-                },
-                {
-                    label: 'Repeat 🤘',
-                    type: 'checkbox',
-                    checked: controller.mode === PLAYER_LOOP,
-                    click: () => {
-                        if (controller.mode === PLAYER_LOOP) {
-                            controller.changeMode(PLAYER_REPEAT);
-                        } else {
-                            controller.changeMode(PLAYER_LOOP);
-                        }
-                    }
-                },
-                {
-                    label: 'Shuffle ⚡️',
-                    type: 'checkbox',
-                    checked: controller.mode === PLAYER_SHUFFLE,
-                    enabled: !isFMPlaying(),
-                    click: () => {
-                        controller.changeMode(PLAYER_SHUFFLE);
                     }
                 },
                 {
@@ -203,81 +144,15 @@ class App extends Component {
                     type: 'separator',
                 },
                 {
-                    label: 'Home',
-                    click: () => {
-                        navigator.router.push('/');
-                    }
-                },
-                {
-                    label: 'Search',
-                    click: () => {
-                        stores.search.toggle(true);
-                    }
-                },
-                {
-                    label: 'Playlist',
-                    click: () => {
-                        navigator.router.push('/playlist/全部');
-                    }
-                },
-                {
-                    label: 'FM',
-                    click: () => {
-                        navigator.router.push('/fm');
-                    }
-                },
-                {
-                    type: 'separator',
-                },
-                {
-                    label: 'Show Comments 💬',
+                    label: '评论',
                     click: () => {
                         comments.toggle(true);
                     }
                 },
                 {
-                    label: 'Show Lyrics 🎤',
+                    label: '歌词',
                     click: () => {
                         lyrics.toggle(true);
-                    }
-                },
-                {
-                    type: 'separator',
-                },
-                {
-                    label: 'Bug report 🐛',
-                    click: () => {
-                        shell.openExternal('https://github.com/trazyn/ieaseMusic/issues');
-                    }
-                },
-                {
-                    label: 'Fork me on Github 🚀',
-                    click: () => {
-                        shell.openExternal('https://github.com/trazyn/ieaseMusic');
-                    }
-                },
-                {
-                    type: 'separator',
-                },
-                {
-                    label: 'Minimize 👇',
-                    click: () => {
-                        ipcRenderer.send('minimize');
-                    }
-                },
-                {
-                    label: 'Goodbye 😘',
-                    click: () => {
-                        ipcRenderer.send('goodbye');
-                    }
-                },
-                {
-                    type: 'separator',
-                },
-                {
-                    label: '💕 Follow me on Twitter 👏',
-                    click: () => {
-                        shell.openExternal('https://twitter.com/var_darling');
                     }
                 },
             ]);

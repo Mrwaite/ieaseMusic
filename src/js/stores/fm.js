@@ -21,6 +21,7 @@ class FM {
         self.loading = true;
 
         var response = await axios.get(`/api/fm`);
+        ;
         self.playlist = response.data;
         self.song = self.playlist.songs[0];
         self.loading = false;

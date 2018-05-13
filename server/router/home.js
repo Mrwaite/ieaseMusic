@@ -12,7 +12,7 @@ async function getNewest() {
 
     try {
         let response = await axios.get('/hot/album');
-
+        ;
         if (response.data.code !== 200) {
             throw response.data;
         } else {
@@ -39,7 +39,7 @@ async function getPersonalized() {
 
     try {
         let response = await axios.get('/personalized');
-
+        ;
         if (response.data.code !== 200) {
             throw response.data;
         } else {
@@ -66,7 +66,7 @@ async function getSongs(id) {
 
     try {
         let response = await axios.get(`/playlist/detail?id=${id}`);
-
+        ;
         if (response.data.code === 200) {
             songs = response.data.playlist.tracks.map(e => {
                 // eslint-disable-next-line
@@ -105,7 +105,7 @@ async function getLiked(id) {
 
     try {
         let response = await axios.get(`/user/playlist?uid=${id}`);
-
+        ;
         if (response.data.code !== 200) {
             error('Failed to get liked: %O', response.data);
         } else {
@@ -134,7 +134,7 @@ async function getDaily() {
 
     try {
         let response = await axios.get('/recommend/songs');
-
+        ;
         if (response.data.code !== 200) {
             throw response.data;
         } else {
@@ -177,7 +177,7 @@ async function getRecommend() {
 
     try {
         let response = await axios.get('/recommend/resource');
-
+        ;
         if (response.data.code !== 200) {
             throw response.data;
         } else {

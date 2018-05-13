@@ -83,6 +83,14 @@ class Layout extends Component {
             return <Loader show={true} />;
         }
 
+        // Menu 是左侧的弹出的导航栏
+        // Search 导航栏里面的搜索页
+        // volume 音量
+        // Playing 右上角的搜索小按钮
+        // audioPlaer 播放器
+        // PlayerNavigation 播放条
+        // PlayerMode 播放模式
+        // PlayerStatus 播放状态
         return (
             <div
                 className={classes.container}

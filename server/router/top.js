@@ -20,6 +20,7 @@ router.get('/:ids', async(req, res) => {
     try {
         list = await Promise.all(ids.map(async e => {
             let response = await axios.get(`/top/list?idx=${e}`);
+            ;
             let data = response.data.result;
 
             if (response.data.code !== 200) {

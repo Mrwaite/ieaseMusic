@@ -147,23 +147,6 @@ class Menu extends Component {
                         </div>
                     </div>
 
-                    <div className={classes.social}>
-                        <a
-                            className={clazz('tooltip', classes.github)}
-                            data-text="Fork me on Github"
-                            href="https://github.com/trazyn"
-                            target="_blank">
-                            <i className="ion-social-github" />
-                        </a>
-
-                        <a
-                            className={clazz('tooltip', classes.twitter)}
-                            data-text="Follow me on Twitter 😘"
-                            href="https://twitter.com/var_darling"
-                            target="_blank">
-                            <i className="ion-social-twitter" />
-                        </a>
-                    </div>
                 </section>
             </div>
         );

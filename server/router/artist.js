@@ -99,6 +99,7 @@ async function getSimilar(id) {
 
     try {
         let response = await axios.get(`/simi/artist?id=${id}`);
+        ;
         let data = response.data;
 
         if (data.code !== 200) {

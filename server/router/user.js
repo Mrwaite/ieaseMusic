@@ -40,6 +40,7 @@ async function getPlaylist(id) {
 
     try {
         let response = await axios.get(`/user/playlist?uid=${id}`);
+        ;
         let data = response.data;
 
         if (data.code !== 200) {

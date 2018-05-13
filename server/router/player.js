@@ -44,7 +44,7 @@ async function getSimilarArtist(id) {
 
     try {
         let response = await axios.get(`/simi/artist?id=${id}`);
-
+        ;
         if (response.data.code === 200) {
             response.data.artists.map(e => {
                 artists.push({
